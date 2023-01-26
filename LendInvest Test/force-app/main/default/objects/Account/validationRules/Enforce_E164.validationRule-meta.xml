@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enforce_E164</fullName>
+    <active>true</active>
+    <description>Enforces the E.164 format for phone numbers</description>
+    <errorConditionFormula>IF(NOT(ISBLANK(Phone)),
+!REGEX( Phone , &quot;^\\+[1-9]\\d{1,14}$&quot;),
+false)</errorConditionFormula>
+    <errorDisplayField>Phone</errorDisplayField>
+    <errorMessage>Please enter phone numbers in the E.164 format (i.e. +00000000000)</errorMessage>
+</ValidationRule>

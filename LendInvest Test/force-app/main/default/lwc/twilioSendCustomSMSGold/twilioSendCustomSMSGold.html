@@ -1,0 +1,20 @@
+<template>
+    <template if:true={phone}>
+        <lightning-card icon-name="standard:quick_text">
+            <lightning-button slot="actions" variant="brand" label="Send" title="Send action"
+                onclick={send} disabled={disableButton}>
+            </lightning-button>
+            <h1 slot="title">Send SMS</h1>
+            <lightning-textarea class="slds-var-p-horizontal_medium" name="SMSBody" id="SMSBody" placeholder="Enter SMS here..." maxlength="1600"
+                onchange={handleSMSBodyChange} value={SMSBody} message-when-too-long="A maximum of 1600 characters are allowed in a message.">
+            </lightning-textarea>
+        </lightning-card>
+    </template>
+
+    <template if:false={phone}>
+        <lightning-card icon-name="standard:quick_text">
+            <h1 slot="title">Send SMS</h1>
+            <div class="slds-var-p-horizontal_medium">Please enter a valid phone number on the record detail page to send SMS messages.</div>
+        </lightning-card>
+    </template>
+</template>
