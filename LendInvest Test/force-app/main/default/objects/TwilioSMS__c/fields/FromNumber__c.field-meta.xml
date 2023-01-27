@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FromNumber__c</fullName>
+    <description>Twilio Number used in telecommunications</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Twilio Number used in telecommunications</inlineHelpText>
+    <label>FromNumber</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Phone</type>
+</CustomField>

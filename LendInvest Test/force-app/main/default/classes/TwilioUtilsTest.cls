@@ -1,5 +1,8 @@
 @isTest
 private class TwilioUtilsTest {
+    private static TwilioSMS__c getCustomSettings(){
+        return new TwilioSMS__c(AccountSID__c ='01234567890', FromNumber__c='+44123456789', GoldAlertNumber__c='+44123456789', SetupOwnerId = UserInfo.getOrganizationId());
+    }
     
     //Dummy SMS callout success
     private class SuccessSMSMock implements HttpCalloutMock {
@@ -27,6 +30,7 @@ private class TwilioUtilsTest {
         Account acc = new Account(Name='Test 1 Acc', Phone='+44123456789');
         Opportunity opp = new Opportunity(Name='Test 1 Opp', CloseDate=Date.valueOf('2025-01-01'), Stagename='Closed Won', Amount=50000);
         Test.setMock(HttpCalloutMock.class, new SuccessSMSMock());
+        insert getCustomSettings();
         Test.startTest();
         insert acc;
         opp.AccountId=acc.Id;
@@ -37,6 +41,7 @@ private class TwilioUtilsTest {
     @isTest //tests for failed response from FUTURE SMS request
     static void sendSMSFutureFail() {
         Test.setMock(HttpCalloutMock.class, new FailSMSMock());
+        insert getCustomSettings();
         Test.startTest();
         TwilioUtils.SendFutureSMS('+44123456789','Fail Body');
         Test.stopTest();
@@ -45,6 +50,7 @@ private class TwilioUtilsTest {
     @isTest //tests for success response from SMS request
     static void sendSMSSuccess() {
         Test.setMock(HttpCalloutMock.class, new SuccessSMSMock());
+        insert getCustomSettings();
         Test.startTest();
         TwilioUtils.SendSMS('+44123456789','Success Body');
         Test.stopTest();
@@ -53,6 +59,7 @@ private class TwilioUtilsTest {
     @isTest //tests for failed response from SMS request
     static void sendSMSFail() {
         Test.setMock(HttpCalloutMock.class, new FailSMSMock());
+        insert getCustomSettings();
         Test.startTest();
         try {
             TwilioUtils.SendSMS('+44123456789','Fail Body');
@@ -71,6 +78,7 @@ private class TwilioUtilsTest {
         wrap.SMSBody = 'test body'; 
         wrap.ToNumber='+44123456789';
         Test.setMock(HttpCalloutMock.class, new SuccessSMSMock());
+        insert getCustomSettings();
         test.startTest();
         twilioSendCustomSMSGoldController.sendSMS(wrap);
         test.stopTest();
@@ -81,6 +89,7 @@ private class TwilioUtilsTest {
         twilioSendCustomSMSGoldController.SMSWrapper wrap = new twilioSendCustomSMSGoldController.SMSWrapper();
         wrap.SMSBody = ''; 
         wrap.ToNumber='';
+        insert getCustomSettings();
         test.startTest();
         try{
             twilioSendCustomSMSGoldController.sendSMS(wrap);
